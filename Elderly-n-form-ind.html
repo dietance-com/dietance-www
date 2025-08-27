@@ -29,6 +29,7 @@
             <form action="https://api.web3forms.com/submit" method="POST">
                 
                 <input type="hidden" name="apikey" value="14c53ae0-fe02-4d45-b2f6-b6e0f17577c2">
+                  <input type="hidden" name="page_url" id="pageUrlField">
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
@@ -49,13 +50,11 @@
                     <label for="plan" class="form-label">Select a Plan</label>
                     <select class="form-select" id="plan" name="plan" required>
                         <option selected disabled value="">Choose...</option>
-                        <option value="01 Month INR 5,999">01 Month INR 5,999</option>
-                        <option value="03 Months INR 11,999">03 Months INR 11,999</option>
-                        <option value="06 Months INR 18,999">06 Months INR 18,999</option>
+                        <option value="01 Month INR 3,999">01 Month INR 3,999</option>
+                        <option value="03 Months INR 9,999">03 Months INR 9,999</option>
+                        <option value="06 Months INR 14,999">06 Months INR 14,999</option>
                     </select>
                 </div>
-
-                <P>Please be aware that your bank or financial institution may charge a forex fee for international transactions, which could be deducted from the payment amount. We have no control over these fees.</P>
 
                 <div class="mb-3">
                     <label for="message" class="form-label">Additional Message (Optional)</label>
