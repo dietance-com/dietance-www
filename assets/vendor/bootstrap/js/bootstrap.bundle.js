@@ -1559,23 +1559,23 @@
       for (const activeInstance of activeChildren) {
         activeInstance.hide();
       }
-      const dimension = this._getDimension();
+      const dimenion = this._getDimenion();
       this._element.classList.remove(CLASS_NAME_COLLAPSE);
       this._element.classList.add(CLASS_NAME_COLLAPSING);
-      this._element.style[dimension] = 0;
+      this._element.style[dimenion] = 0;
       this._addAriaAndCollapsedClass(this._triggerArray, true);
       this._isTransitioning = true;
       const complete = () => {
         this._isTransitioning = false;
         this._element.classList.remove(CLASS_NAME_COLLAPSING);
         this._element.classList.add(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW$7);
-        this._element.style[dimension] = '';
+        this._element.style[dimenion] = '';
         EventHandler.trigger(this._element, EVENT_SHOWN$6);
       };
-      const capitalizedDimension = dimension[0].toUpperCase() + dimension.slice(1);
-      const scrollSize = `scroll${capitalizedDimension}`;
+      const capitalizedDimenion = dimenion[0].toUpperCase() + dimenion.slice(1);
+      const scrollSize = `scroll${capitalizedDimenion}`;
       this._queueCallback(complete, this._element, true);
-      this._element.style[dimension] = `${this._element[scrollSize]}px`;
+      this._element.style[dimenion] = `${this._element[scrollSize]}px`;
     }
     hide() {
       if (this._isTransitioning || !this._isShown()) {
@@ -1585,8 +1585,8 @@
       if (startEvent.defaultPrevented) {
         return;
       }
-      const dimension = this._getDimension();
-      this._element.style[dimension] = `${this._element.getBoundingClientRect()[dimension]}px`;
+      const dimenion = this._getDimenion();
+      this._element.style[dimenion] = `${this._element.getBoundingClientRect()[dimenion]}px`;
       reflow(this._element);
       this._element.classList.add(CLASS_NAME_COLLAPSING);
       this._element.classList.remove(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW$7);
@@ -1603,7 +1603,7 @@
         this._element.classList.add(CLASS_NAME_COLLAPSE);
         EventHandler.trigger(this._element, EVENT_HIDDEN$6);
       };
-      this._element.style[dimension] = '';
+      this._element.style[dimenion] = '';
       this._queueCallback(complete, this._element, true);
     }
 
@@ -1616,7 +1616,7 @@
       config.parent = getElement(config.parent);
       return config;
     }
-    _getDimension() {
+    _getDimenion() {
       return this._element.classList.contains(CLASS_NAME_HORIZONTAL) ? WIDTH : HEIGHT;
     }
     _initializeChildren() {
@@ -5332,7 +5332,7 @@
           phase: 'beforeMain',
           fn: data => {
             // Pre-set Popper's placement attribute in order to read the arrow sizes properly.
-            // Otherwise, Popper mixes up the width and height dimensions since the initial arrow style is for top placement
+            // Otherwise, Popper mixes up the width and height dimenions since the initial arrow style is for top placement
             this._getTipElement().setAttribute('data-popper-placement', data.state.placement);
           }
         }]
