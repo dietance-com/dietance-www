@@ -382,6 +382,24 @@
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
+    <!-- Chatwoot Live Chat Widget -->
+  <script>
+  window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
+  (function(d,t) {
+    var BASE_URL="https://app.chatwoot.com";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: 'qFESqUAdAZrJYoDJCNTZ8GxN',
+        baseUrl: BASE_URL
+      })
+    }
+  })(document,"script");
+</script>
+
 <script defer src="https://cloud.umami.is/script.js" data-website-id="20a8076d-e8a5-4224-9436-9e4d332198d6"></script>  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
