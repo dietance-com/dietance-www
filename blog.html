@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietance Blog</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        /* Basic markdown styling for the post content */
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.25;
+            color: #fff;
+        }
+        .markdown-content h1 { font-size: 2.25rem; }
+        .markdown-content h2 { font-size: 1.875rem; }
+        .markdown-content h3 { font-size: 1.5rem; }
+        .markdown-content p, .markdown-content li {
+            margin-bottom: 1rem;
+        }
+        .markdown-content ul, .markdown-content ol {
+            list-style-position: inside;
+            margin-left: 1.5rem;
+        }
+        .markdown-content pre {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        .markdown-content code {
+            background-color: #2d3748;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+        }
+        .markdown-content strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex min-h-screen">
+        <aside id="left-sidebar" class="w-72 bg-[#2D3436] p-6 shadow-lg transform -translate-x-full fixed h-full z-50 transition-transform duration-300 md:relative md:translate-x-0 md:h-auto">
+            <div class="text-center mb-10">
+                <img src="/assets/img/branding/logo-w-tagline.webp" alt="Logo" class="rounded-full mx-auto mb-4">
+                <h1 class="text-2xl font-bold">Dietance</h1>
+                <p class="text-gray-400">Shubhangi sharma</p>
+            </div>
+            <nav>
+                <ul>
+                    <li class="mb-4">
+                        <a href="#/" class="flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#/categories" class="flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                            Categories
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-10 overflow-auto">
+            <header class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <button id="menu-button" class="md:hidden p-2 mr-4 text-gray-400 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <h2 id="page-title" class="text-3xl font-bold"></h2>
+                </div>
+                <div class="relative w-full md:w-auto mt-4 md:mt-0">
+                    <input id="search-input" type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full bg-[#2D3436] text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                </div>
+            </header>
+
+            <div id="content-container">
+                </div>
+        </main>
+        
+        <aside class="w-72 bg-[#2D3436] p-6 shadow-lg hidden md:block">
+            <div id="right-sidebar">
+                </div>
+        </aside>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-40 hidden md:hidden"></div>
+
+    <script>
+        let allPosts = [];
+        
+        const contentContainer = document.getElementById('content-container');
+        const rightSidebar = document.getElementById('right-sidebar');
+        const leftSidebar = document.getElementById('left-sidebar');
+        const menuButton = document.getElementById('menu-button');
+        const overlay = document.getElementById('overlay');
+        const searchInput = document.getElementById('search-input');
+
+        // Function to find the highest numbered blog post file
+        async function findHighestPostIndex() {
+            let index = 1;
+            while (true) {
+                try {
+                    const response = await fetch(`/assets/blog/${index}.md`);
+                    if (!response.ok) {
+                        break; // Stop when a file is not found (404)
+                    }
+                    index++;
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    break; // Stop on network error
+                }
+            }
+            return index - 1; // Return the last successful index
+        }
+
+        // Function to fetch all blog posts using the discovered index
+        async function fetchBlogPosts() {
+            contentContainer.innerHTML = `<div class="p-8 text-center text-gray-400">Loading posts...</div>`;
+            
+            const highestIndex = await findHighestPostIndex();
+            const fetchedPosts = [];
+            
+            for (let i = highestIndex; i >= 1; i--) {
+                const file = `${i}.md`;
+                try {
+                    const response = await fetch(`/assets/blog/${file}`);
+                    if (response.ok) {
+                        const content = await response.text();
+                        const { metadata, content: body } = parseMarkdown(content);
+                        fetchedPosts.push({
+                            slug: metadata.slug || metadata.title.toLowerCase().replace(/\s+/g, '-'),
+                            ...metadata,
+                            body: body,
+                            summary: metadata.summary || body.split('\n')[0].replace(/# /g, ''),
+                        });
+                    }
+                } catch (error) {
+                    console.error(`Failed to fetch ${file}:`, error);
+                }
+            }
+
+            allPosts = fetchedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // After loading, trigger a re-render
+            handleRouting();
+        }
+
+        // Function to parse the front matter from a Markdown string
+        function parseMarkdown(md) {
+            const frontMatterRegex = /^---\s*([\s\S]*?)\s*---([\s\S]*)/;
+            const match = md.match(frontMatterRegex);
+            
+            if (!match) {
+                return { metadata: {}, content: md };
+            }
+
+            const metadataString = match[1];
+            const content = match[2].trim();
+            const metadata = {};
+
+            metadataString.split('\n').forEach(line => {
+                const parts = line.split(':');
+                if (parts.length > 1) {
+                    const key = parts[0].trim();
+                    let value = parts.slice(1).join(':').trim();
+                    
+                    if (key === 'tags') {
+                        // Handle the tags array
+                        const tagList = value.replace(/^-/, '').trim().split(/\s*-\s*/).map(t => t.trim());
+                        metadata[key] = tagList;
+                    } else {
+                        metadata[key] = value;
+                    }
+                }
+            });
+
+            return { metadata, content };
+        }
+        
+        // --- Updated convertMarkdownToHtml function starts here ---
+        function convertMarkdownToHtml(md) {
+            let html = md;
+            
+            // Convert list items to temporary placeholders
+            // This is a simple fix to prevent the list items from being wrapped in <p> tags
+            const unorderedListItems = [];
+            html = html.replace(/^(\s*[\*\-]\s+.*)$/gm, (match) => {
+                unorderedListItems.push(match.replace(/^[\*\-]\s+/, ''));
+                return '---UL_ITEM---';
+            });
+
+            const orderedListItems = [];
+            html = html.replace(/^(\s*\d+\.\s+.*)$/gm, (match) => {
+                orderedListItems.push(match.replace(/^\d+\.\s+/, ''));
+                return '---OL_ITEM---';
+            });
+            
+            // Block-level elements first
+            html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            
+            // Horizontal Rule
+            html = html.replace(/^(?:\s*[-*]){3,}\s*$/gim, '<hr>');
+            
+            // Inline elements
+            html = html.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full h-auto rounded-lg my-6">');
+            html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-indigo-400 hover:underline">$1</a>');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+            
+            // Paragraphs - now ignores lines that have been converted to other block-level elements
+            html = html.replace(/^(?!<h|<pre>|<img|<a|<hr>|\s*---)(.*$)/gim, '<p>$1</p>');
+            
+            // Replace temporary list placeholders with final HTML
+            if (unorderedListItems.length > 0) {
+                let ulHtml = '<ul>';
+                unorderedListItems.forEach(item => {
+                    ulHtml += `<li>${item}</li>`;
+                });
+                ulHtml += '</ul>';
+                html = html.replace(/---UL_ITEM---(\s*<p>---UL_ITEM---<\/p>)*/g, ulHtml);
+            }
+
+            if (orderedListItems.length > 0) {
+                let olHtml = '<ol>';
+                orderedListItems.forEach(item => {
+                    olHtml += `<li>${item}</li>`;
+                });
+                olHtml += '</ol>';
+                html = html.replace(/---OL_ITEM---(\s*<p>---OL_ITEM---<\/p>)*/g, olHtml);
+            }
+
+            // Cleanup any remaining <p> tags around lists, just in case.
+            html = html.replace(/<p><ul>/g, '<ul>');
+            html = html.replace(/<\/ul><\/p>/g, '</ul>');
+            html = html.replace(/<p><ol>/g, '<ol>');
+            html = html.replace(/<\/ol><\/p>/g, '</ol>');
+
+
+            return html;
+        }
+        // --- Updated convertMarkdownToHtml function ends here ---
+
+        // Function to render the list of blog posts
+        function renderPostList(postsToRender = allPosts) {
+            let postsHtml = '';
+            
+            if (postsToRender.length === 0) {
+                postsHtml = `<div class="p-8 text-center text-gray-400">No posts found. Try a different search query.</div>`;
+            } else {
+                postsToRender.forEach(post => {
+                    postsHtml += `
+                        <a href="#/post/${post.slug}" class="block bg-[#2D3436] p-6 rounded-lg shadow-lg mb-8 transition-transform transform hover:scale-105">
+                            ${post.featured_image ? `<img src="${post.featured_image}" alt="${post.title}" class="w-full h-48 object-cover rounded-md mb-6">` : ''}
+                            <h3 class="text-xl font-bold text-white mb-2">${post.title}</h3>
+                            <p class="text-sm text-gray-400 mb-4">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            <p class="text-gray-300 mb-4">${post.summary}</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${post.tags ? post.tags.map(tag => `<span class="bg-indigo-500 text-white text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join('') : ''}
+                            </div>
+                        </a>
+                    `;
+                });
+                postsHtml = `<div class="flex flex-col gap-6">${postsHtml}</div>`;
+            }
+
+            contentContainer.innerHTML = postsHtml;
+            document.getElementById('page-title').innerText = 'Home';
+        }
+
+        // Function to render a single blog post
+        function renderPostDetail(slug) {
+            const post = allPosts.find(p => p.slug === slug);
+            
+            if (!post) {
+                contentContainer.innerHTML = `<div class="p-8 text-center text-gray-400">Post not found.</div>`;
+                return;
+            }
+
+            const htmlContent = convertMarkdownToHtml(post.body);
+
+            contentContainer.innerHTML = `
+                <div class="bg-[#2D3436] p-8 md:p-12 rounded-lg shadow-lg">
+                    <h1 class="text-4xl font-bold text-white mb-2">${post.title}</h1>
+                    <p class="text-lg text-gray-400 mb-6">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <div class="flex flex-wrap gap-2 mb-8">
+                         ${post.tags ? post.tags.map(tag => `<span class="bg-indigo-500 text-white text-sm font-semibold px-3 py-1 rounded-full">${tag}</span>`).join('') : ''}
+                    </div>
+                    <div class="markdown-content prose prose-invert max-w-none text-gray-300">
+                        ${htmlContent}
+                    </div>
+                    <div class="mt-10">
+                        <a href="#/" class="inline-block px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition-colors">
+                            &larr; Back to all posts
+                        </a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('page-title').innerText = post.title;
+        }
+
+        // Function to render the right sidebar content
+        function renderRightSidebar() {
+            const recentPosts = [...allPosts].slice(0, 5); // Show top 5 recent posts
+
+            let recentPostsHtml = `<h3 class="text-xl font-bold mb-4">Recently Updated</h3><ul class="space-y-4">`;
+            recentPosts.forEach(post => {
+                recentPostsHtml += `
+                    <li>
+                        <a href="#/post/${post.slug}" class="block text-gray-300 hover:text-white transition-colors">
+                            <h4 class="font-semibold">${post.title}</h4>
+                            <p class="text-xs text-gray-500">${new Date(post.date).toLocaleDateString()}</p>
+                        </a>
+                    </li>
+                `;
+            });
+            recentPostsHtml += `</ul>`;
+
+            rightSidebar.innerHTML = recentPostsHtml;
+        }
+
+        // Function to handle the search logic
+        function handleSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            if (query === '') {
+                renderPostList(allPosts);
+            } else {
+                const filteredPosts = allPosts.filter(post => {
+                    const titleMatch = post.title.toLowerCase().includes(query);
+                    const summaryMatch = post.summary.toLowerCase().includes(query);
+                    const contentMatch = post.body.toLowerCase().includes(query);
+                    const tagsMatch = post.tags && post.tags.some(tag => tag.toLowerCase().includes(query));
+                    return titleMatch || summaryMatch || contentMatch || tagsMatch;
+                });
+                renderPostList(filteredPosts);
+            }
+        }
+        
+        // Function to render the categories list
+        function renderCategories() {
+            const categories = {};
+            allPosts.forEach(post => {
+                if (post.category) {
+                    categories[post.category] = (categories[post.category] || 0) + 1;
+                }
+            });
+
+            let categoriesHtml = `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">`;
+            for (const category in categories) {
+                categoriesHtml += `
+                    <a href="#/category/${encodeURIComponent(category)}" class="block p-6 rounded-lg bg-[#2D3436] hover:bg-gray-700 transition-colors">
+                        <h3 class="text-xl font-bold text-white">${category}</h3>
+                        <p class="text-gray-400 mt-2">${categories[category]} post${categories[category] > 1 ? 's' : ''}</p>
+                    </a>
+                `;
+            }
+            categoriesHtml += `</div>`;
+            contentContainer.innerHTML = categoriesHtml;
+            document.getElementById('page-title').innerText = 'Categories';
+        }
+
+        // Function to render posts for a specific category
+        function renderCategoryPosts(categoryName) {
+            const decodedCategory = decodeURIComponent(categoryName);
+            const filteredPosts = allPosts.filter(post => post.category === decodedCategory);
+            renderPostList(filteredPosts);
+            document.getElementById('page-title').innerText = decodedCategory;
+        }
+
+        // Simple hash-based router
+        async function handleRouting() {
+            // Only fetch posts once at the start
+            if (allPosts.length === 0) {
+                await fetchBlogPosts();
+            }
+
+            const hash = window.location.hash.substring(1);
+            if (hash.startsWith('/post/')) {
+                const slug = hash.replace('/post/', '');
+                renderPostDetail(slug);
+            } else if (hash.startsWith('/category/')) {
+                const category = hash.replace('/category/', '');
+                renderCategoryPosts(category);
+            } else if (hash === '/categories') {
+                renderCategories();
+            } else {
+                renderPostList();
+            }
+            // Always render the right sidebar on every route change
+            renderRightSidebar();
+        }
+        
+        // Mobile menu toggle
+        menuButton.addEventListener('click', () => {
+            leftSidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+
+        overlay.addEventListener('click', () => {
+            leftSidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Add event listeners to close the sidebar when a nav link is clicked
+        const navLinks = leftSidebar.querySelectorAll('a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                leftSidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        });
+
+        // Add search functionality
+        searchInput.addEventListener('keyup', handleSearch);
+
+        // Initial render and handle navigation changes
+        window.addEventListener('hashchange', handleRouting);
+        window.onload = handleRouting;
+
+    </script>
+</body>
+</html>
