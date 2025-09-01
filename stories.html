@@ -222,7 +222,9 @@
 
             if (reviewsToDisplay.length === 0) {
                 loading.style.display = 'none';
-                noMore.style.display = 'block';
+                if (currentReviewIndex === 0) { // Only show "no more" if no reviews were found
+                    noMore.style.display = 'block';
+                }
                 window.removeEventListener('scroll', handleScroll);
                 return;
             }
@@ -233,10 +235,28 @@
             loading.style.display = 'none';
             dataIsLoading = false;
 
-            if (currentReviewIndex >= filteredReviews.length) {
+            // After loading, check if the page is full. If not, load more reviews.
+            // This is the key change for desktop.
+            checkIfMoreReviewsNeeded();
+            
+            // Add or remove scroll listener based on whether there are more reviews to load
+            if (currentReviewIndex < filteredReviews.length) {
+                window.addEventListener('scroll', handleScroll);
+            } else {
                 noMore.style.display = 'block';
                 window.removeEventListener('scroll', handleScroll);
             }
+        }
+        
+        function checkIfMoreReviewsNeeded() {
+            // A slight delay to allow the browser to render the new cards and update scrollHeight
+            setTimeout(() => {
+                const { scrollHeight, clientHeight } = document.documentElement;
+                // Load more if there are reviews left and no scrollbar yet
+                if (currentReviewIndex < filteredReviews.length && scrollHeight <= clientHeight + 10) {
+                    displayMoreReviews();
+                }
+            }, 100);
         }
 
         function createReviewCard(review) {
@@ -319,7 +339,7 @@
         }
 
         function handleScroll() {
-            if (isAtBottom() && !dataIsLoading) {
+            if (isAtBottom() && !dataIsLoading && currentReviewIndex < filteredReviews.length) {
                 displayMoreReviews();
             }
         }
@@ -331,7 +351,6 @@
         });
 
         window.addEventListener('load', loadAllReviews);
-        window.addEventListener('scroll', handleScroll);
     </script>
 </body>
 </html>
