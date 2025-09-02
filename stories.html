@@ -238,6 +238,7 @@
             // Reset display
             reviewContainer.innerHTML = '';
             currentReviewIndex = 0;
+            noMore.style.display = 'none'; // Hide the "no more" message on filter change
             displayMoreReviews();
         }
 
@@ -248,7 +249,8 @@
 
             if (reviewsToDisplay.length === 0) {
                 loading.style.display = 'none';
-                if (currentReviewIndex === 0) { // Only show "no more" if no reviews were found
+                // Only show "no more" message if the filtered reviews list is not empty
+                if (filteredReviews.length > 0) {
                     noMore.style.display = 'block';
                 }
                 window.removeEventListener('scroll', handleScroll);
@@ -262,7 +264,6 @@
             dataIsLoading = false;
 
             // After loading, check if the page is full. If not, load more reviews.
-            // This is the key change for desktop.
             checkIfMoreReviewsNeeded();
             
             // Add or remove scroll listener based on whether there are more reviews to load
