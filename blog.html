@@ -24,13 +24,35 @@
         .markdown-content h1 { font-size: 2.25rem; }
         .markdown-content h2 { font-size: 1.875rem; }
         .markdown-content h3 { font-size: 1.5rem; }
-        .markdown-content p, .markdown-content li {
+        
+        .markdown-content p {
             margin-bottom: 1rem;
+            line-height: 1.6;
         }
+
         .markdown-content ul, .markdown-content ol {
-            list-style-position: inside;
-            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
         }
+
+        .markdown-content ul {
+            list-style-type: disc;
+        }
+        
+        .markdown-content ol {
+            list-style-type: decimal;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-content li > p {
+            margin-bottom: 0;
+            display: inline;
+        }
+
         .markdown-content pre {
             background-color: #2d3748;
             color: #e2e8f0;
@@ -39,13 +61,38 @@
             overflow-x: auto;
             margin-bottom: 1rem;
         }
+
         .markdown-content code {
+            font-family: monospace;
             background-color: #2d3748;
             padding: 0.2rem 0.4rem;
             border-radius: 0.25rem;
         }
+
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+
         .markdown-content strong {
             font-weight: bold;
+            color: #fff;
+        }
+
+        .markdown-content em {
+            font-style: italic;
+        }
+
+        .markdown-content a {
+            color: #63b3ed;
+            text-decoration: underline;
+        }
+        .markdown-content hr {
+            border: 0;
+            height: 1px;
+            background: #4a5568;
+            margin: 2rem 0;
         }
     </style>
 </head>
@@ -204,68 +251,87 @@
         
         // --- Updated convertMarkdownToHtml function starts here ---
         function convertMarkdownToHtml(md) {
-            let html = md;
-            
-            // Convert list items to temporary placeholders
-            // This is a simple fix to prevent the list items from being wrapped in <p> tags
-            const unorderedListItems = [];
-            html = html.replace(/^(\s*[\*\-]\s+.*)$/gm, (match) => {
-                unorderedListItems.push(match.replace(/^[\*\-]\s+/, ''));
-                return '---UL_ITEM---';
-            });
+            const lines = md.split('\n');
+            let html = '';
+            let inList = false;
+            let listType = '';
 
-            const orderedListItems = [];
-            html = html.replace(/^(\s*\d+\.\s+.*)$/gm, (match) => {
-                orderedListItems.push(match.replace(/^\d+\.\s+/, ''));
-                return '---OL_ITEM---';
-            });
-            
-            // Block-level elements first
-            html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-            
-            // Horizontal Rule
-            html = html.replace(/^(?:\s*[-*]){3,}\s*$/gim, '<hr>');
-            
-            // Inline elements
-            html = html.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full h-auto rounded-lg my-6">');
-            html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-indigo-400 hover:underline">$1</a>');
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-            html = html.replace(/`(.*?)`/g, '<code>$1</code>');
-            
-            // Paragraphs - now ignores lines that have been converted to other block-level elements
-            html = html.replace(/^(?!<h|<pre>|<img|<a|<hr>|\s*---)(.*$)/gim, '<p>$1</p>');
-            
-            // Replace temporary list placeholders with final HTML
-            if (unorderedListItems.length > 0) {
-                let ulHtml = '<ul>';
-                unorderedListItems.forEach(item => {
-                    ulHtml += `<li>${item}</li>`;
-                });
-                ulHtml += '</ul>';
-                html = html.replace(/---UL_ITEM---(\s*<p>---UL_ITEM---<\/p>)*/g, ulHtml);
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+
+                // Check for block-level elements
+                if (line.match(/^# /)) {
+                    // Heading 1
+                    html += `<h1>${line.replace(/^# /, '')}</h1>`;
+                    inList = false;
+                } else if (line.match(/^## /)) {
+                    // Heading 2
+                    html += `<h2>${line.replace(/^## /, '')}</h2>`;
+                    inList = false;
+                } else if (line.match(/^### /)) {
+                    // Heading 3
+                    html += `<h3>${line.replace(/^### /, '')}</h3>`;
+                    inList = false;
+                } else if (line.match(/^(\s*[-*]|\s*\d+\.) /)) {
+                    // List item
+                    const isUnordered = line.match(/^(\s*[-*]) /);
+                    const currentListType = isUnordered ? 'ul' : 'ol';
+                    const content = line.replace(/^\s*[-*]\s*|\s*\d+\.\s*/, '');
+
+                    // Start a new list if we're not in one, or if the list type changes
+                    if (!inList || listType !== currentListType) {
+                        if (inList) html += `</${listType}>`; // Close previous list
+                        html += `<${currentListType}>`;
+                        inList = true;
+                        listType = currentListType;
+                    }
+
+                    html += `<li>${convertInlineMarkdown(content)}</li>`;
+                } else {
+                    // Not a list item, close any open lists
+                    if (inList) {
+                        html += `</${listType}>`;
+                        inList = false;
+                    }
+
+                    // Check for other block elements
+                    if (line.trim() === '---') {
+                        // Horizontal rule
+                        html += `<hr>`;
+                    } else if (line.trim().startsWith('```')) {
+                        // Code block
+                        const language = line.substring(3).trim();
+                        let codeBlock = '';
+                        while (i + 1 < lines.length && !lines[i + 1].trim().startsWith('```')) {
+                            i++;
+                            codeBlock += lines[i] + '\n';
+                        }
+                        i++; // Consume the closing ```
+                        html += `<pre><code class="language-${language}">${codeBlock.trim()}</code></pre>`;
+                    } else if (line.trim() !== '') {
+                        // Paragraph
+                        html += `<p>${convertInlineMarkdown(line)}</p>`;
+                    }
+                }
             }
-
-            if (orderedListItems.length > 0) {
-                let olHtml = '<ol>';
-                orderedListItems.forEach(item => {
-                    olHtml += `<li>${item}</li>`;
-                });
-                olHtml += '</ol>';
-                html = html.replace(/---OL_ITEM---(\s*<p>---OL_ITEM---<\/p>)*/g, olHtml);
+            
+            // Close any remaining open lists at the end of the document
+            if (inList) {
+                html += `</${listType}>`;
             }
-
-            // Cleanup any remaining <p> tags around lists, just in case.
-            html = html.replace(/<p><ul>/g, '<ul>');
-            html = html.replace(/<\/ul><\/p>/g, '</ul>');
-            html = html.replace(/<p><ol>/g, '<ol>');
-            html = html.replace(/<\/ol><\/p>/g, '</ol>');
-
 
             return html;
+        }
+
+        // Helper function for inline markdown conversion
+        function convertInlineMarkdown(text) {
+            let inlineHtml = text;
+            inlineHtml = inlineHtml.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full h-auto rounded-lg my-6">');
+            inlineHtml = inlineHtml.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-indigo-400 hover:underline">$1</a>');
+            inlineHtml = inlineHtml.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            inlineHtml = inlineHtml.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            inlineHtml = inlineHtml.replace(/`(.*?)`/g, '<code>$1</code>');
+            return inlineHtml;
         }
         // --- Updated convertMarkdownToHtml function ends here ---
 
