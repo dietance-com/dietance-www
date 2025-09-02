@@ -9,17 +9,17 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #F8F4EC;
+            color: #4A4A4A;
         }
 
-        /* Basic markdown styling for the post content */
+        /* Adjust colors and fonts to match the new theme */
         .markdown-content h1, .markdown-content h2, .markdown-content h3 {
             font-weight: bold;
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
             line-height: 1.25;
-            color: #fff;
+            color: #713133; /* Darker heading color */
         }
         .markdown-content h1 { font-size: 2.25rem; }
         .markdown-content h2 { font-size: 1.875rem; }
@@ -28,6 +28,7 @@
         .markdown-content p {
             margin-bottom: 1rem;
             line-height: 1.6;
+            color: #4A4A4A; /* Body text color */
         }
 
         .markdown-content ul, .markdown-content ol {
@@ -54,8 +55,8 @@
         }
 
         .markdown-content pre {
-            background-color: #2d3748;
-            color: #e2e8f0;
+            background-color: #EFEBE4; /* Lighter background for code blocks */
+            color: #713133;
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
@@ -64,7 +65,7 @@
 
         .markdown-content code {
             font-family: monospace;
-            background-color: #2d3748;
+            background-color: #EFEBE4;
             padding: 0.2rem 0.4rem;
             border-radius: 0.25rem;
         }
@@ -77,7 +78,7 @@
 
         .markdown-content strong {
             font-weight: bold;
-            color: #fff;
+            color: #713133;
         }
 
         .markdown-content em {
@@ -85,13 +86,13 @@
         }
 
         .markdown-content a {
-            color: #63b3ed;
+            color: #A36551;
             text-decoration: underline;
         }
         .markdown-content hr {
             border: 0;
             height: 1px;
-            background: #4a5568;
+            background: #D1C5B5;
             margin: 2rem 0;
         }
     </style>
@@ -99,22 +100,22 @@
 
 <body>
     <div class="flex min-h-screen">
-        <aside id="left-sidebar" class="w-72 bg-[#2D3436] p-6 shadow-lg transform -translate-x-full fixed h-full z-50 transition-transform duration-300 md:relative md:translate-x-0 md:h-auto">
+        <aside id="left-sidebar" class="w-72 bg-[#EFEBE4] p-6 shadow-lg transform -translate-x-full fixed h-full z-50 transition-transform duration-300 md:relative md:translate-x-0 md:h-auto">
             <div class="text-center mb-10">
-                <img src="/assets/img/branding/logo-nobg.webp" alt="Logo" class="rounded-full mx-auto mb-4">
-                <h1 class="text-2xl font-bold">Dietance</h1>
-                <p class="text-gray-400">Shubhangi sharma</p>
+                <img src="/assets/img/branding/blog-logo-sidebar.webp" alt="Logo" class="rounded-full mx-auto mb-4">
+                <h1 class="text-2xl font-bold text-[#713133]">Shubhangi Sharma</h1>
+                <p class="text-[#A36551]">CEO / Author</p>
             </div>
             <nav>
                 <ul>
                     <li class="mb-4">
-                        <a href="index.html" class="flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                        <a href="index.html" class="flex items-center p-3 rounded-lg text-[#4A4A4A] hover:bg-[#D1C5B5] transition-colors">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             Home
                         </a>
                     </li>
                     <li class="mb-4">
-                        <a href="#/" class="flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                        <a href="#/" class="flex items-center p-3 rounded-lg text-[#4A4A4A] hover:bg-[#D1C5B5] transition-colors">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
 </svg>
@@ -122,7 +123,7 @@
                         </a>
                     </li>
                     <li class="mb-4">
-                        <a href="#/categories" class="flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                        <a href="#/categories" class="flex items-center p-3 rounded-lg text-[#4A4A4A] hover:bg-[#D1C5B5] transition-colors">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
                             Categories
                         </a>
@@ -134,14 +135,14 @@
         <main class="flex-1 p-6 md:p-10 overflow-auto">
             <header class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="flex items-center">
-                    <button id="menu-button" class="md:hidden p-2 mr-4 text-gray-400 hover:text-white focus:outline-none">
+                    <button id="menu-button" class="md:hidden p-2 mr-4 text-[#A36551] hover:text-[#713133] focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
-                    <h2 id="page-title" class="text-3xl font-bold"></h2>
+                    <h2 id="page-title" class="text-3xl font-bold text-[#713133]"></h2>
                 </div>
                 <div class="relative w-full md:w-auto mt-4 md:mt-0">
-                    <input id="search-input" type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full bg-[#2D3436] text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    <input id="search-input" type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full bg-[#EFEBE4] text-[#4A4A4A] border border-[#D1C5B5] focus:outline-none focus:ring-2 focus:ring-[#A36551]">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D1C5B5]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
             </header>
 
@@ -149,8 +150,8 @@
                 </div>
         </main>
         
-        <aside class="w-72 bg-[#2D3436] p-6 shadow-lg hidden md:block">
-            <div id="right-sidebar">
+        <aside class="w-72 bg-[#EFEBE4] p-6 shadow-lg hidden md:block">
+            <div id="right-sidebar" class="text-[#4A4A4A]">
                 </div>
         </aside>
     </div>
@@ -187,7 +188,7 @@
 
         // Function to fetch all blog posts using the discovered index
         async function fetchBlogPosts() {
-            contentContainer.innerHTML = `<div class="p-8 text-center text-gray-400">Loading posts...</div>`;
+            contentContainer.innerHTML = `<div class="p-8 text-center text-[#A36551]">Loading posts...</div>`;
             
             const highestIndex = await findHighestPostIndex();
             const fetchedPosts = [];
@@ -327,7 +328,7 @@
         function convertInlineMarkdown(text) {
             let inlineHtml = text;
             inlineHtml = inlineHtml.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full h-auto rounded-lg my-6">');
-            inlineHtml = inlineHtml.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-indigo-400 hover:underline">$1</a>');
+            inlineHtml = inlineHtml.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-[#A36551] hover:underline">$1</a>');
             inlineHtml = inlineHtml.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             inlineHtml = inlineHtml.replace(/\*(.*?)\*/g, '<em>$1</em>');
             inlineHtml = inlineHtml.replace(/`(.*?)`/g, '<code>$1</code>');
@@ -340,17 +341,17 @@
             let postsHtml = '';
             
             if (postsToRender.length === 0) {
-                postsHtml = `<div class="p-8 text-center text-gray-400">No posts found. Try a different search query.</div>`;
+                postsHtml = `<div class="p-8 text-center text-[#A36551]">No posts found. Try a different search query.</div>`;
             } else {
                 postsToRender.forEach(post => {
                     postsHtml += `
-                        <a href="#/post/${post.slug}" class="block bg-[#2D3436] p-6 rounded-lg shadow-lg mb-8 transition-transform transform hover:scale-105">
+                        <a href="#/post/${post.slug}" class="block bg-[#EFEBE4] p-6 rounded-lg shadow-lg mb-8 transition-transform transform hover:scale-105">
                             ${post.featured_image ? `<img src="${post.featured_image}" alt="${post.title}" class="w-full h-48 object-cover rounded-md mb-6">` : ''}
-                            <h3 class="text-xl font-bold text-white mb-2">${post.title}</h3>
-                            <p class="text-sm text-gray-400 mb-4">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                            <p class="text-gray-300 mb-4">${post.summary}</p>
+                            <h3 class="text-xl font-bold text-[#713133] mb-2">${post.title}</h3>
+                            <p class="text-sm text-[#A36551] mb-4">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            <p class="text-[#4A4A4A] mb-4">${post.summary}</p>
                             <div class="flex flex-wrap gap-2">
-                                ${post.tags ? post.tags.map(tag => `<span class="bg-indigo-500 text-white text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join('') : ''}
+                                ${post.tags ? post.tags.map(tag => `<span class="bg-[#A36551] text-white text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join('') : ''}
                             </div>
                         </a>
                     `;
@@ -367,24 +368,24 @@
             const post = allPosts.find(p => p.slug === slug);
             
             if (!post) {
-                contentContainer.innerHTML = `<div class="p-8 text-center text-gray-400">Post not found.</div>`;
+                contentContainer.innerHTML = `<div class="p-8 text-center text-[#A36551]">Post not found.</div>`;
                 return;
             }
 
             const htmlContent = convertMarkdownToHtml(post.body);
 
             contentContainer.innerHTML = `
-                <div class="bg-[#2D3436] p-8 md:p-12 rounded-lg shadow-lg">
-                    <h1 class="text-4xl font-bold text-white mb-2">${post.title}</h1>
-                    <p class="text-lg text-gray-400 mb-6">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <div class="bg-[#EFEBE4] p-8 md:p-12 rounded-lg shadow-lg">
+                    <h1 class="text-4xl font-bold text-[#713133] mb-2">${post.title}</h1>
+                    <p class="text-lg text-[#A36551] mb-6">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     <div class="flex flex-wrap gap-2 mb-8">
-                         ${post.tags ? post.tags.map(tag => `<span class="bg-indigo-500 text-white text-sm font-semibold px-3 py-1 rounded-full">${tag}</span>`).join('') : ''}
+                         ${post.tags ? post.tags.map(tag => `<span class="bg-[#A36551] text-white text-sm font-semibold px-3 py-1 rounded-full">${tag}</span>`).join('') : ''}
                     </div>
-                    <div class="markdown-content prose prose-invert max-w-none text-gray-300">
+                    <div class="markdown-content prose prose-invert max-w-none text-[#4A4A4A]">
                         ${htmlContent}
                     </div>
                     <div class="mt-10">
-                        <a href="#/" class="inline-block px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition-colors">
+                        <a href="#/" class="inline-block px-6 py-3 bg-[#A36551] text-white font-semibold rounded-lg shadow-md hover:bg-[#713133] transition-colors">
                             &larr; Back to all posts
                         </a>
                     </div>
@@ -397,13 +398,13 @@
         function renderRightSidebar() {
             const recentPosts = [...allPosts].slice(0, 5); // Show top 5 recent posts
 
-            let recentPostsHtml = `<h3 class="text-xl font-bold mb-4">Recently Updated</h3><ul class="space-y-4">`;
+            let recentPostsHtml = `<h3 class="text-xl font-bold text-[#713133] mb-4">Recently Updated</h3><ul class="space-y-4">`;
             recentPosts.forEach(post => {
                 recentPostsHtml += `
                     <li>
-                        <a href="#/post/${post.slug}" class="block text-gray-300 hover:text-white transition-colors">
+                        <a href="#/post/${post.slug}" class="block text-[#4A4A4A] hover:text-[#713133] transition-colors">
                             <h4 class="font-semibold">${post.title}</h4>
-                            <p class="text-xs text-gray-500">${new Date(post.date).toLocaleDateString()}</p>
+                            <p class="text-xs text-[#A36551]">${new Date(post.date).toLocaleDateString()}</p>
                         </a>
                     </li>
                 `;
@@ -442,9 +443,9 @@
             let categoriesHtml = `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">`;
             for (const category in categories) {
                 categoriesHtml += `
-                    <a href="#/category/${encodeURIComponent(category)}" class="block p-6 rounded-lg bg-[#2D3436] hover:bg-gray-700 transition-colors">
-                        <h3 class="text-xl font-bold text-white">${category}</h3>
-                        <p class="text-gray-400 mt-2">${categories[category]} post${categories[category] > 1 ? 's' : ''}</p>
+                    <a href="#/category/${encodeURIComponent(category)}" class="block p-6 rounded-lg bg-[#EFEBE4] hover:bg-[#D1C5B5] transition-colors">
+                        <h3 class="text-xl font-bold text-[#713133]">${category}</h3>
+                        <p class="text-[#A36551] mt-2">${categories[category]} post${categories[category] > 1 ? 's' : ''}</p>
                     </a>
                 `;
             }
