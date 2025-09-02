@@ -214,6 +214,17 @@
 
             allPosts = fetchedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+            // --- ADDED: Dynamically preload the featured image of the latest post ---
+            if (allPosts.length > 0 && allPosts[0].featured_image) {
+                const preloadLink = document.createElement('link');
+                preloadLink.rel = 'preload';
+                preloadLink.as = 'image';
+                preloadLink.href = allPosts[0].featured_image;
+                preloadLink.fetchpriority = 'high';
+                document.head.appendChild(preloadLink);
+            }
+            // --- END ADDITION ---
+
             // After loading, trigger a re-render
             handleRouting();
         }
@@ -344,9 +355,12 @@
                 postsHtml = `<div class="p-8 text-center text-[#A36551]">No posts found. Try a different search query.</div>`;
             } else {
                 postsToRender.forEach(post => {
+                    // --- MODIFIED: Add fetchpriority="high" to the featured image for the list ---
+                    const featuredImage = post.featured_image ? `<img src="${post.featured_image}" alt="${post.title}" class="w-full h-48 object-cover rounded-md mb-6" fetchpriority="high">` : '';
+                    
                     postsHtml += `
                         <a href="#/post/${post.slug}" class="block bg-[#EFEBE4] p-6 rounded-lg shadow-lg mb-8 transition-transform transform hover:scale-105">
-                            ${post.featured_image ? `<img src="${post.featured_image}" alt="${post.title}" class="w-full h-48 object-cover rounded-md mb-6">` : ''}
+                            ${featuredImage}
                             <h3 class="text-xl font-bold text-[#713133] mb-2">${post.title}</h3>
                             <p class="text-sm text-[#A36551] mb-4">${post.category ? `Category: ${post.category} | ` : ''} ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                             <p class="text-[#4A4A4A] mb-4">${post.summary}</p>
@@ -372,7 +386,11 @@
                 return;
             }
 
-            const htmlContent = convertMarkdownToHtml(post.body);
+            // --- MODIFIED: Adjust convertMarkdownToHtml to handle featured images ---
+            const htmlContent = post.featured_image 
+                ? `<img src="${post.featured_image}" alt="${post.title}" class="w-full h-auto rounded-lg mb-6" fetchpriority="high">` + convertMarkdownToHtml(post.body)
+                : convertMarkdownToHtml(post.body);
+            // --- END MODIFICATION ---
 
             contentContainer.innerHTML = `
                 <div class="bg-[#EFEBE4] p-8 md:p-12 rounded-lg shadow-lg">
