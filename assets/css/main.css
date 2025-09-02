@@ -1642,8 +1642,7 @@ section,
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
-
-<!-- Pricing Model CSS -->
+/* Pricing Model CSS start */
 
 <style>
 
@@ -1741,4 +1740,4 @@ section,
 
     </style>
     
-<!-- Pricing Model CSS END-->
+/* Pricing Model CSS end */
