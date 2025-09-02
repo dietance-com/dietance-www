@@ -392,7 +392,7 @@ h6 {
     font-size: 15px;
     text-transform: none;
     color: var(--nav-dropdown-color);
-  }
+  }  
 
   .navmenu .dropdown ul a i {
     font-size: 12px;
@@ -667,6 +667,12 @@ h6 {
 .footer .credits {
   margin-top: 8px;
   font-size: 13px;
+}
+
+.footer-heading-style {
+  font-size: 1.5rem; /* This is close to the default size of an h4 */
+  font-weight: bold; /* And this makes it look like a heading */
+  /* You can add more styles here if you like */
 }
 
 /*--------------------------------------------------------------
