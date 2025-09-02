@@ -11,6 +11,7 @@
         body {
             font-family: "Inter", sans-serif;
             background-color: #fbfaf7;
+            color: #4a4a4a;
         }
         .review-card {
             min-height: 150px;
@@ -66,9 +67,25 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .text-green-custom {
+            color: #5a809b;
+        }
+        .bg-green-custom {
+            background-color: #5a809b;
+        }
+        .border-green-custom {
+            border-color: #5a809b;
+        }
+        .hover-bg-green-custom:hover {
+            background-color: #4a6a82;
+        }
+        .hover-text-green-custom:hover {
+            color: #4a6a82;
+        }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col items-center">
+<body class="bg-[#fbfaf7] flex flex-col items-center">
     
     <div class="w-full max-w-7xl p-6 md:p-10 relative">
         <div class="mb-6">
@@ -85,12 +102,12 @@
         <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
             <div class="flex items-center gap-2">
                 <label for="tag-filter" class="text-gray-700">Tag:</label>
-                <input type="text" id="tag-filter" placeholder="e.g., diabetes" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                <input type="text" id="tag-filter" placeholder="e.g., diabetes" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5a809b]"/>
             </div>
-            <button id="filter-btn" class="bg-stone-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-500   transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="filter-btn" class="bg-[#5a809b] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#4a6a82] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#5a809b]">
                 Filter
             </button>
-            <button id="reset-btn" class="bg-stone-200 text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            <button id="reset-btn" class="bg-[#e0e0e0] text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#d0d0d0] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#5a809b]">
                 Show All
             </button>
         </div>
@@ -99,7 +116,7 @@
             </main>
 
         <div id="loading" class="mt-8 flex flex-col items-center justify-center">
-            <div class="loading-spinner h-10 w-10 rounded-full border-4 border-gray-300 border-t-custom-blue"></div>
+            <div class="loading-spinner h-10 w-10 rounded-full border-4 border-gray-300 border-t-green-custom"></div>
             <p class="mt-2 text-lg text-gray-600">Loading stories...</p>
         </div>
         
@@ -272,11 +289,11 @@
             const card = document.createElement('div');
             card.className = "review-card bg-white rounded-xl shadow-lg p-6 md:p-8 w-full transition-all duration-300 hover:shadow-xl border border-gray-200 cursor-pointer";
             
-            const tagsHtml = review.tags.map(tag => `<span class="bg-gray-200 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join(' ');
+            const tagsHtml = review.tags.map(tag => `<span class="bg-[#e0e0e0] text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join(' ');
 
             card.innerHTML = `
                 <div class="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-500 flex-shrink-0 mr-4 mt-1" viewBox="0 0 24 24" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-custom flex-shrink-0 mr-4 mt-1" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10c.85 0 1.67-.14 2.44-.4s1.46-.66 2.09-1.29l2.83 2.83a.75.75 0 0 0 1.06 0 .75.75 0 0 0 0-1.06l-2.83-2.83a10.012 10.012 0 0 0 1.29-2.09c.26-.77.4-1.59.4-2.44A10 10 0 0 0 12 2zm0 1.5a8.5 8.5 0 0 1 8.5 8.5c0 .73-.1.54-.28 1.14-.14.47-.35.8-.57 1.15-.3.49-.6.94-.97 1.34s-.85.8-1.34 1.13c-.47.28-.8.35-1.15.57-.49.3-.94.6-1.34.97-.87.58-1.52.92-2.13 1.13-.61.21-.99.31-1.38.31a8.5 8.5 0 0 1-8.5-8.5A8.5 8.5 0 0 1 12 3.5zm-2.5 5A1.5 1.5 0 0 1 11 10a1.5 1.5 0 0 1-1.5 1.5 1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 8.5 8.5zm5 0A1.5 1.5 0 0 1 16 10a1.5 1.5 0 0 1-1.5 1.5 1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 13.5 8.5z" />
                     </svg>
                     <div class="flex-grow">
@@ -285,7 +302,7 @@
                         <div class="mt-2 flex flex-wrap gap-2">
                            ${tagsHtml}
                         </div>
-                        <p class="mt-4 text-sm text-blue-700 font-semibold">- ${review.author}</p>
+                        <p class="mt-4 text-sm text-[#5a809b] font-semibold">- ${review.author}</p>
                     </div>
                 </div>
             `;
@@ -299,7 +316,7 @@
 
         function showReviewModal(review) {
             const messageAsHtml = marked.parse(review.message);
-            const tagsHtml = review.tags.map(tag => `<span class="bg-gray-200 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join(' ');
+            const tagsHtml = review.tags.map(tag => `<span class="bg-[#e0e0e0] text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">${tag}</span>`).join(' ');
 
             // Populate the modal with the review content
             modalBody.innerHTML = `
@@ -310,7 +327,7 @@
                 <div class="prose max-w-none text-gray-600 leading-relaxed text-base mb-6">
                     ${messageAsHtml}
                 </div>
-                <p class="text-sm text-blue-700 font-semibold text-right">- ${review.author}</p>
+                <p class="text-sm text-[#5a809b] font-semibold text-right">- ${review.author}</p>
             `;
             
             // Show the modal with a fade-in effect
