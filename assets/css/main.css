@@ -167,13 +167,14 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Global Header
+# Global Header (CORRECTED)
 --------------------------------------------------------------*/
 .header {
   color: var(--default-color);
-  transition: all 0.5s;
   z-index: 997;
   background-color: var(--background-color);
+  /* Use a proper transition for a smooth animation */
+  transition: all 0.5s ease-in-out; 
 }
 
 .header .topbar {
@@ -278,14 +279,10 @@ h6 {
   }
 }
 
+/* CORRECT RULE: This hides the entire header and adds a shadow */
 .scrolled .header {
+  transform: translateY(-100%);
   box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
-}
-
-.scrolled .header .topbar {
-  height: 0;
-  visibility: hidden;
-  overflow: hidden;
 }
 
 /*--------------------------------------------------------------
